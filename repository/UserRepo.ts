@@ -57,7 +57,7 @@ export class UserRepository {
   async find() {
     try {
       const response = await this.db.find({});
-      return { response: "hello" };
+      return response;
     } catch (error) {
       console.log(error);
     }

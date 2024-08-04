@@ -95,8 +95,8 @@ export class UserService {
     const userExists = await this.isUserRegistered(email);
     const validationResult = await registercredentialValidation(
       name,
-      email,
-      password
+      email
+      // password
     );
 
     if (validationResult.error) {
@@ -197,7 +197,7 @@ export class UserService {
     }
   }
 
-  async ShowUser() {
+  async ShowUsers() {
     try {
       const response = await this.UserRepository.find();
       return response;

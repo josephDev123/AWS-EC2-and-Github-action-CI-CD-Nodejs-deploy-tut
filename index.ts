@@ -9,8 +9,24 @@ import { ErrorHandlerMiddleware } from "./middleware/ErrorHandlerMiddleware";
 
 dotenv.config();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://aws-client.netlify.app/",
+];
+
 const corsOption = {
-  origin: "http://localhost:5173",
+  // origin: "http://localhost:5173",
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(String(origin))) {
+      return callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
 
@@ -24,8 +40,8 @@ app.use(cookieParser());
 const startApp = async () => {
   try {
     await db.connect();
+    app.use("/auth/", AuthRoute);
     app.use("/", (req: Request, res: Response) => res.send("Testing..."));
-    app.use("/auth", AuthRoute);
     app.use(ErrorHandlerMiddleware);
 
     app.listen(process.env.PORT, () => {

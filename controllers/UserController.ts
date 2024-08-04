@@ -26,7 +26,7 @@ export class UserController {
   //get users
   async show(req: Request, res: Response, next: NextFunction) {
     try {
-      const responseRes = await this.UserService.ShowUser();
+      const responseRes = await this.UserService.ShowUsers();
       return res.status(200).json(responseRes);
     } catch (error) {
       console.log(error);
