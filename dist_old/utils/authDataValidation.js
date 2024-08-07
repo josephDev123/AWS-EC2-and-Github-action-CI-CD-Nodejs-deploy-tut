@@ -23,17 +23,21 @@ const registercredentialValidation = (name, email, password) => __awaiter(void 0
                 .pattern(/^[a-zA-Z\s]+$/)
                 .trim()
                 .required(),
-            password: joi_1.default.string()
-                .min(8)
-                .max(15)
-                .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
-                .message("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character.")
-                .required(),
+            // password: Joi.string()
+            //   .min(8)
+            //   .max(15)
+            //   .pattern(
+            //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/
+            //   )
+            //   .message(
+            //     "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one digit, and one special character."
+            //   )
+            //   .required(),
             email: joi_1.default.string()
                 .email({ tlds: { allow: false } })
                 .required(),
         });
-        return schema.validate({ name, password, email });
+        return schema.validate({ name, email }); //password
     }
     catch (error) {
         // console.log(error + " here");

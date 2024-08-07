@@ -40,7 +40,7 @@ class UserController {
     show(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const responseRes = yield this.UserService.ShowUser();
+                const responseRes = yield this.UserService.ShowUsers();
                 return res.status(200).json(responseRes);
             }
             catch (error) {

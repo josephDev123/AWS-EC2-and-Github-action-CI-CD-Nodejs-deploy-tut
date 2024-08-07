@@ -69,7 +69,9 @@ class UserService {
         return __awaiter(this, void 0, void 0, function* () {
             const { email, name, password } = req.body;
             const userExists = yield this.isUserRegistered(email);
-            const validationResult = yield (0, authDataValidation_1.registercredentialValidation)(name, email, password);
+            const validationResult = yield (0, authDataValidation_1.registercredentialValidation)(name, email
+            // password
+            );
             if (validationResult.error) {
                 const error = new GlobalErrorHandler_1.GlobalErrorHandler("ValidateError", validationResult.error.message, 400, true, "error");
                 next(error);
@@ -130,7 +132,7 @@ class UserService {
             }
         });
     }
-    ShowUser() {
+    ShowUsers() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const response = yield this.UserRepository.find();
