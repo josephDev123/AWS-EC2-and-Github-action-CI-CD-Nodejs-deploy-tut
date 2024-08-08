@@ -9,31 +9,30 @@ import { ErrorHandlerMiddleware } from "./middleware/ErrorHandlerMiddleware";
 
 dotenv.config();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://aws-client.netlify.app",
-];
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   "https://aws-client.netlify.app",
+// ];
 
-const corsOption = {
-  // origin: "http://localhost:5173",
-  origin: (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
-  ) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(String(origin))) {
-      return callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
+// const corsOption = {
+//   origin: (
+//     origin: string | undefined,
+//     callback: (err: Error | null, allow?: boolean) => void
+//   ) => {
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.includes(String(origin))) {
+//       return callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+// };
 
 const app: Express = express();
 const db = new DbConfig(process.env.DATABASE_URL!);
 
-app.use(cors(corsOption));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
