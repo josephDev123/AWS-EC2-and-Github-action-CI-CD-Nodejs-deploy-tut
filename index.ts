@@ -11,7 +11,7 @@ dotenv.config();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://aws-client.netlify.app/",
+  "https://aws-client.netlify.app",
 ];
 
 const corsOption = {
