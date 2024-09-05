@@ -21,7 +21,7 @@ const Oauth = googleapis_1.google.auth.OAuth2;
 const OauthClient = new Oauth(process.env.CLIENT_ID, process.env.CLIENT_SECRET);
 OauthClient.setCredentials({ refresh_token: process.env.EMAIL_REFRESH_TOKEN });
 // Define a function to send emails
-const sendMail = ({ otp, email }) => __awaiter(void 0, void 0, void 0, function* () {
+const sendMail = (_a) => __awaiter(void 0, [_a], void 0, function* ({ otp, email }) {
     try {
         const access_token = yield OauthClient.getAccessToken();
         // Create a reusable transporter

@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticateToken = void 0;
+exports.authenticateToken = authenticateToken;
 const VerifyToken_1 = __importDefault(require("../utils/VerifyToken"));
 function authenticateToken(req, res, next) {
-    var _a;
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         try {
             const tokenHeader = req.headers.cookie;
             // const tokenHeader = req.headers.authorization;
@@ -77,5 +77,4 @@ function authenticateToken(req, res, next) {
         }
     });
 }
-exports.authenticateToken = authenticateToken;
 //# sourceMappingURL=authenticateToken.js.map

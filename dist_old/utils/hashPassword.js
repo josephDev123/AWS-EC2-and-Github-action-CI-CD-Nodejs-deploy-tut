@@ -32,7 +32,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hashPassword = void 0;
+exports.hashPassword = hashPassword;
 const bcrypt = __importStar(require("bcrypt"));
 function hashPassword(passwordToHash) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -47,5 +47,4 @@ function hashPassword(passwordToHash) {
         }
     });
 }
-exports.hashPassword = hashPassword;
 //# sourceMappingURL=hashPassword.js.map

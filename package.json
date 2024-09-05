@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.3",
     "nodemailer": "^6.9.13",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -31,6 +32,6 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.4.10",
     "@types/nodemailer": "^6.4.9",
-    "typescript": "^5.1.6"
+    "typescript": "^5.5.4"
   }
 }

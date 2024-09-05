@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateRandomPIN = void 0;
+exports.generateRandomPIN = generateRandomPIN;
 function generateRandomPIN() {
     const length = 7;
     let pin = "";
@@ -10,7 +10,6 @@ function generateRandomPIN() {
     }
     return pin;
 }
-exports.generateRandomPIN = generateRandomPIN;
 // Example usage:
 //   const otpPIN = generateRandomPIN();
 //   console.log("Generated OTP PIN:", otpPIN);

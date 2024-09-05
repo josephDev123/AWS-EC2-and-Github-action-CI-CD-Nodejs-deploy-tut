@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = tokenIsVerify;
 // export default function tokenIsVerify(token: string) {
 //   return jwt.verify(token, process.env.SECRET as string, (err, decoded) => {
 //     if (err) {
@@ -40,5 +41,4 @@ function tokenIsVerify(token) {
         });
     });
 }
-exports.default = tokenIsVerify;
 //# sourceMappingURL=VerifyToken.js.map
