@@ -20,27 +20,27 @@ const authRoute_1 = require("./routes/auths/authRoute");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const ErrorHandlerMiddleware_1 = require("./middleware/ErrorHandlerMiddleware");
 dotenv_1.default.config();
-const allowedOrigins = [
-    "http://localhost:5173",
-    "https://aws-client.netlify.app/",
-];
-const corsOption = {
-    // origin: "http://localhost:5173",
-    origin: (origin, callback) => {
-        if (!origin)
-            return callback(null, true);
-        if (allowedOrigins.includes(String(origin))) {
-            return callback(null, true);
-        }
-        else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true,
-};
+// const allowedOrigins = [
+//   "http://localhost:5173",
+//   "https://aws-client.netlify.app",
+// ];
+// const corsOption = {
+//   origin: (
+//     origin: string | undefined,
+//     callback: (err: Error | null, allow?: boolean) => void
+//   ) => {
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.includes(String(origin))) {
+//       return callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+// };
 const app = (0, express_1.default)();
 const db = new db_1.DbConfig(process.env.DATABASE_URL);
-app.use((0, cors_1.default)(corsOption));
+app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
