@@ -47,10 +47,10 @@ const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield db.connect();
         app.use("/auth", authRoute_1.AuthRoute);
-        app.use("/", (req, res) => res.send("Testing..."));
+        app.use("/", (req, res) => res.send("Testing...."));
         app.use(ErrorHandlerMiddleware_1.ErrorHandlerMiddleware);
         app.listen(process.env.PORT, () => {
-            console.log(`listening on port ${process.env.PORT}`);
+            console.log(`listening on port ${process.env.PORT || 5000}`);
         });
     }
     catch (error) {
