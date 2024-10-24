@@ -40,7 +40,7 @@ const startApp = async () => {
   try {
     await db.connect();
     app.use("/auth", AuthRoute);
-    app.use("/", (req: Request, res: Response) => res.send("Testing..."));
+    app.use("/", (req: Request, res: Response) => res.send("Testing.."));
 
     app.use(ErrorHandlerMiddleware);
 
