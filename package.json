@@ -4,7 +4,8 @@
   "description": "fintech app",
   "main": "index.ts",
   "scripts": {
-    "dev": "tsc && nodemon ./index.ts",
+    "build": "tsc",
+    "start": "nodemon ./dist_old/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "joseph",
