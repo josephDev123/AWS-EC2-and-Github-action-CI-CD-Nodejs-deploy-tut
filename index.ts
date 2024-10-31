@@ -44,6 +44,7 @@ const startApp = async () => {
       res.send("Testing....")
     );
 
+    app.use("/users", (req: Request, res: Response) => res.send("users...."));
     app.use(ErrorHandlerMiddleware);
 
     app.listen(process.env.PORT || 5000, () => {

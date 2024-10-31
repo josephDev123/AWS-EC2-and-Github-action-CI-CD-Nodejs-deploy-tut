@@ -47,7 +47,8 @@ const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield db.connect();
         app.use("/auth", authRoute_1.AuthRoute);
-        app.use("/", (req, res) => res.send("Testing...."));
+        app.use("/testing", (req, res) => res.send("Testing...."));
+        app.use("/users", (req, res) => res.send("users...."));
         app.use(ErrorHandlerMiddleware_1.ErrorHandlerMiddleware);
         app.listen(process.env.PORT || 5000, () => {
             console.log(`listening on port ${process.env.PORT || 5000}`);
