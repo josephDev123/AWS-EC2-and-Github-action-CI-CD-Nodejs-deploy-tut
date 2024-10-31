@@ -44,7 +44,7 @@ const startApp = async () => {
 
     app.use(ErrorHandlerMiddleware);
 
-    app.listen(process.env.PORT, () => {
+    app.listen(process.env.PORT || 5000, () => {
       console.log(`listening on port ${process.env.PORT || 5000}`);
     });
   } catch (error) {
