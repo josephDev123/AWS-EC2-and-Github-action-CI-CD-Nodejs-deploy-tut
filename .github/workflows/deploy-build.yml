@@ -27,5 +27,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app-package
-          path: app.zip
+          name: artifact
+          path: build/
