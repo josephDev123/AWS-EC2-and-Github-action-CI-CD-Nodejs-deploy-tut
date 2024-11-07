@@ -25,7 +25,7 @@ jobs:
         run: npm run build
 
       - name: Verify build directory
-        run: ls -R build
+        run: ls -R
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
