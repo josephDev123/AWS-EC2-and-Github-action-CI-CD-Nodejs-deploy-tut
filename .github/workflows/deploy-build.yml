@@ -55,7 +55,6 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           target: /app/
           source: ./dist_old/*
-          command: mkdir -p /app/ # Ensure the target directory exists
           debug: true # Enable detailed debugging logs
 
       - name: Restart application on EC2
@@ -65,5 +64,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
+            mkdir -p /app/  
             cd /app/
             pm2 restart all || pm2 start dist_old/index.js --name "my-app"
