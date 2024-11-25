@@ -44,6 +44,9 @@ jobs:
           name: artifact
           path: dist_old/
 
+      - name: Verify artifact content
+        run: ls -la ./dist_old/
+
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -52,6 +55,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           target: /app/
           source: ./dist_old/*
+          command: mkdir -p /app/ # Ensure the target directory exists
+          debug: true # Enable detailed debugging logs
 
       - name: Restart application on EC2
         uses: appleboy/ssh-action@v0.1.6
