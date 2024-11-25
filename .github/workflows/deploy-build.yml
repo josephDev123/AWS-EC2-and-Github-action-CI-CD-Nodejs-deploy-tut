@@ -1,4 +1,4 @@
-name: build and deploy to AWS EC2
+name: CI/CD - Build and Deploy to AWS EC2
 
 on:
   push:
@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2 # 'uses' instead of 'use'
+        uses: actions/checkout@v2
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Build application
-        run: npm run build
+        run: "npm run build"
 
       - name: Verify build directory
         run: ls -R
@@ -32,3 +32,33 @@ jobs:
         with:
           name: artifact
           path: dist_old/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist_old/
+
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@v0.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          target: /app/
+          source: ./dist_old/*
+
+      - name: Restart application on EC2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd /app/
+            pm2 restart all || pm2 start dist_old/index.js --name "my-app"
