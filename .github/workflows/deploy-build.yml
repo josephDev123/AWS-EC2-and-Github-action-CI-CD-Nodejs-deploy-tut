@@ -67,8 +67,21 @@ jobs:
           script: |
             mkdir -p /app/  
             cd /app/
+            # Install Node.js and npm if not available
+            if ! command -v node &> /dev/null; then
+            echo "Node.js not found, installing..."
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+            source ~/.bashrc
+            nvm install --lts
+            fi
+            if ! command -v npm &> /dev/null; then
+            echo "npm not found, please check Node.js installation."
+            exit 1
+            fi
+            # Install PM2 if not available
             if ! command -v pm2 &> /dev/null; then
             echo "PM2 not found, installing..."
-            sudo npm install -g pm2
+            npm install -g pm2
             fi
+            # Restart or start the application
             pm2 restart all || pm2 start dist_old/index.js --name "my-app"
