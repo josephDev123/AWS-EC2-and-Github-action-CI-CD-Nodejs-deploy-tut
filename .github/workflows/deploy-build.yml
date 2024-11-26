@@ -67,4 +67,8 @@ jobs:
           script: |
             mkdir -p /app/  
             cd /app/
+            if ! command -v pm2 &> /dev/null; then
+            echo "PM2 not found, installing..."
+            sudo npm install -g pm2
+            fi
             pm2 restart all || pm2 start dist_old/index.js --name "my-app"
