@@ -75,6 +75,9 @@ jobs:
         key: ${{ secrets.EC2_PRIVATE_KEY }}
         script: |
           cd /app/
+          # Set DEBIAN_FRONTEND to noninteractive for the script
+          export DEBIAN_FRONTEND=noninteractive
+
           # Install Node.js if not already installed
           if ! command -v node &> /dev/null; then
           echo "Node.js not found, installing..."
