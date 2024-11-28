@@ -30,6 +30,9 @@ jobs:
         echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist_old/.env
         echo "SECRET=${{ secrets.SECRET }}" >> dist_old/.env
 
+    - name: Verify .env content
+      run: cat dist_old/.env
+
     - name: Copy package.json to build folder
       run: cp package.json dist_old/
 
