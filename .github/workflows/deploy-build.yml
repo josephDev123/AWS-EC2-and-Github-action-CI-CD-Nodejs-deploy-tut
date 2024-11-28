@@ -48,43 +48,43 @@ jobs:
 
     steps:
     - name: Download artifact
-    uses: actions/download-artifact@v3
-    with:
-      name: artifact
-      path: dist_old/
+      uses: actions/download-artifact@v3
+      with:
+        name: artifact
+        path: dist_old/
 
     - name: Verify artifact content
-    run: ls -la ./dist_old/
+      run: ls -la ./dist_old/
 
     - name: Copy files to EC2
-    uses: appleboy/scp-action@v0.1.7
-    with:
-      host: ${{ secrets.EC2_HOST }}
-      username: ${{ secrets.EC2_USER }}
-      key: ${{ secrets.EC2_PRIVATE_KEY }}
-      target: /app/
-      source: ./dist_old/*
-      debug: true
-      tar: false
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        target: /app/
+        source: ./dist_old/*
+        debug: true
+        tar: false
 
     - name: Install Node.js and Restart App
-    uses: appleboy/ssh-action@v0.1.6
-    with:
-      host: ${{ secrets.EC2_HOST }}
-      username: ${{ secrets.EC2_USER }}
-      key: ${{ secrets.EC2_PRIVATE_KEY }}
-      script: |
-        cd /app/
-        # Install Node.js if not already installed
-        if ! command -v node &> /dev/null; then
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_PRIVATE_KEY }}
+        script: |
+          cd /app/
+          # Install Node.js if not already installed
+          if ! command -v node &> /dev/null; then
           echo "Node.js not found, installing..."
           curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
           sudo apt-get install -y nodejs
-        fi
-        # Ensure PM2 is available
-        if ! command -v pm2 &> /dev/null; then
+          fi
+          # Ensure PM2 is available
+          if ! command -v pm2 &> /dev/null; then
           echo "PM2 not found, installing..."
           npm install -g pm2
-        fi
-        # Restart or start the app
-        pm2 restart all || pm2 start dist_old/index.js --name "my-app"
+          fi
+          # Restart or start the app
+          pm2 restart all || pm2 start dist_old/index.js --name "my-app"
