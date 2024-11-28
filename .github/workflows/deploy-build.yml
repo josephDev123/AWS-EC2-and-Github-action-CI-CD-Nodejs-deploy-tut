@@ -33,6 +33,9 @@ jobs:
     - name: Verify .env content
       run: cat dist_old/.env
 
+    - name: Debugging environment variables
+      run: echo "PORT=${{ secrets.PORT }} DATABASE_URL=${{ secrets.DATABASE_URL }} SECRET=${{ secrets.SECRET }}"
+
     - name: Copy package.json to build folder
       run: cp package.json dist_old/
 
