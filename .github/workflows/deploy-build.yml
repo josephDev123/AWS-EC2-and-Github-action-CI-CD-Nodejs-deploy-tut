@@ -3,100 +3,103 @@ name: CI/CD - Build and Deploy to AWS EC2
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Install Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: "20"
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build application
-      run: "npm run build"
+      - name: Build application
+        run: "npm run build"
 
-    - name: Create dist_old directory if it doesn't exist
-      run: mkdir -p dist_old
+      - name: log  the build file
+        run: "ls -lh build/"
 
-    - name: Create .env file
-      run: |
-        echo "PORT=${{ secrets.PORT }}" >> dist_old/.env
-        echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist_old/.env
-        echo "SECRET=${{ secrets.SECRET }}" >> dist_old/.env
+      - name: Create dist_old directory if it doesn't exist
+        run: mkdir -p dist_old
 
-    - name: Verify .env content
-      run: cat dist_old/.env
+      - name: Create .env file
+        run: |
+          echo "PORT=${{ secrets.PORT }}" >> dist_old/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist_old/.env
+          echo "SECRET=${{ secrets.SECRET }}" >> dist_old/.env
 
-    - name: Debugging environment variables
-      run: echo "PORT=${{ secrets.PORT }} DATABASE_URL=${{ secrets.DATABASE_URL }} SECRET=${{ secrets.SECRET }}"
+      - name: Verify .env content
+        run: cat dist_old/.env
 
-    - name: Copy package.json to build folder
-      run: cp package.json dist_old/
+      - name: Debugging environment variables
+        run: echo "PORT=${{ secrets.PORT }} DATABASE_URL=${{ secrets.DATABASE_URL }} SECRET=${{ secrets.SECRET }}"
 
-    - name: Verify build directory
-      run: ls -R
+      - name: Copy package.json to build folder
+        run: cp package.json dist_old/
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: artifact
-        path: dist_old/
+      - name: Verify build directory
+        run: ls -R
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: dist_old/
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-    - name: Download artifact
-      uses: actions/download-artifact@v3
-      with:
-        name: artifact
-        path: dist_old/
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist_old/
 
-    - name: Verify artifact content
-      run: ls -la ./dist_old/
+      - name: Verify artifact content
+        run: ls -la ./dist_old/
 
-    - name: Copy files to EC2
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_PRIVATE_KEY }}
-        target: /app/
-        source: ./dist_old/*
-        debug: true
-        tar: false
+      - name: Copy files to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          target: /app/
+          source: ./dist_old/*
+          debug: true
+          tar: false
 
-    - name: Install Node.js and Restart App
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_PRIVATE_KEY }}
-        script: |
-          cd /app/
-          # Set DEBIAN_FRONTEND to noninteractive for the script
-          export DEBIAN_FRONTEND=noninteractive
+      - name: Install Node.js and Restart App
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd /app/
+            # Set DEBIAN_FRONTEND to noninteractive for the script
+            export DEBIAN_FRONTEND=noninteractive
 
-          # Install Node.js if not already installed
-          if ! command -v node &> /dev/null; then
-          echo "Node.js not found, installing..."
-          curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          fi
-          # Ensure PM2 is available
-          if ! command -v pm2 &> /dev/null; then
-          echo "PM2 not found, installing..."
-          sudo npm install -g pm2
-          fi
-          # Restart or start the app
-          pm2 restart all || pm2 start dist_old/index.js --name "my-app"
+            # Install Node.js if not already installed
+            if ! command -v node &> /dev/null; then
+            echo "Node.js not found, installing..."
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+            fi
+            # Ensure PM2 is available
+            if ! command -v pm2 &> /dev/null; then
+            echo "PM2 not found, installing..."
+            sudo npm install -g pm2
+            fi
+            # Restart or start the app
+            pm2 restart all || pm2 start dist_old/index.js --name "my-app"
