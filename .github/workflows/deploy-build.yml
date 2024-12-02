@@ -77,6 +77,9 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
           echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
 
+      - name: Verify artifact content
+        run: ls -la ./dist/
+
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
