@@ -25,10 +25,10 @@ jobs:
         run: "npm run build"
 
       - name: log  the build file
-        run: "ls -lh build/"
+        run: "ls -lh dist/"
 
-      - name: Create dist_old directory if it doesn't exist
-        run: mkdir -p dist_old
+      # - name: Create dist_old directory if it doesn't exist
+      #   run: mkdir -p dist_old
 
       - name: Create .env file
         run: |
