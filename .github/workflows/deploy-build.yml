@@ -66,10 +66,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: artifact
-          path: dist_old/
+          path: dist/
 
       - name: Verify artifact content
-        run: ls -la ./dist_old/
+        run: ls -la ./dist/
+
+      - name: Create .env file
+        run: |
+          echo "PORT=${{ secrets.PORT }}" >> dist/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
+          echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
 
       - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.7
@@ -78,7 +84,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           target: /app/
-          source: ./dist_old/*
+          source: ./dist/*
           debug: true
           tar: false
 
