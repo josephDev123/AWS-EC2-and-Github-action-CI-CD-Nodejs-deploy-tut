@@ -32,9 +32,9 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "PORT=${{ secrets.PORT }}" >> dist/.env
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
-          echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
+          cp "PORT=${{ secrets.PORT }}" >> dist/.env
+          cp "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
+          cp "SECRET=${{ secrets.SECRET }}" >> dist/.env
 
       - name: Verify .env content
         run: cat dist/.env
@@ -55,7 +55,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: dist_old/
+          path: dist/
 
   deploy:
     runs-on: ubuntu-latest
