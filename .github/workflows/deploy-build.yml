@@ -32,21 +32,24 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "PORT=${{ secrets.PORT }}" >> dist_old/.env
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist_old/.env
-          echo "SECRET=${{ secrets.SECRET }}" >> dist_old/.env
+          echo "PORT=${{ secrets.PORT }}" >> dist/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
+          echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
 
       - name: Verify .env content
-        run: cat dist_old/.env
+        run: cat dist/.env
 
-      - name: Debugging environment variables
-        run: echo "PORT=${{ secrets.PORT }} DATABASE_URL=${{ secrets.DATABASE_URL }} SECRET=${{ secrets.SECRET }}"
+      # - name: Debugging environment variables
+      #   run: echo "PORT=${{ secrets.PORT }} DATABASE_URL=${{ secrets.DATABASE_URL }} SECRET=${{ secrets.SECRET }}"
 
       - name: Copy package.json to build folder
-        run: cp package.json dist_old/
+        run: cp package.json dist/
+
+      - name: Copy package-lock.json to build folder
+        run: cp package-lock.json dist/
 
       - name: Verify build directory
-        run: ls -R
+        run: ls -lh dist/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
