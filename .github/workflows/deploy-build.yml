@@ -92,7 +92,6 @@ jobs:
           target: /var/www/myApps
           source: ./dist/*
           debug: true
-          tar: false
 
       - name: Install Node.js and Restart App
         uses: appleboy/ssh-action@v0.1.6
