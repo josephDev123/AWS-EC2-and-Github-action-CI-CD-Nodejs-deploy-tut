@@ -44,7 +44,7 @@ const startApp = async () => {
       res.send("Testing....")
     );
 
-    app.use("/users", (req: Request, res: Response) => res.send("users...."));
+    app.use("/users", (req: Request, res: Response) => res.send("users..."));
     app.use("/list", (req: Request, res: Response) => res.send("listing...."));
     app.use(ErrorHandlerMiddleware);
 
