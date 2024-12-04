@@ -24,6 +24,9 @@ jobs:
       - name: Build application
         run: "npm run build"
 
+      - name: Copy node_modules to build folder
+        run: cp -r node_modules dist/
+
       - name: log  the build file
         run: "ls -lh dist/"
 
@@ -86,7 +89,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          target: /app/
+          target: /var/www/myApps
           source: ./dist/*
           debug: true
           tar: false
@@ -98,7 +101,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            cd /app/
+            cd /var/www/myApps
             # Set DEBIAN_FRONTEND to noninteractive for the script
             export DEBIAN_FRONTEND=noninteractive
 
@@ -114,4 +117,4 @@ jobs:
             sudo npm install -g pm2
             fi
             # Restart or start the app
-            pm2 restart all || pm2 start dist_old/index.js --name "my-app"
+            pm2 restart all || pm2 start dist/index.js --name "my-app"
