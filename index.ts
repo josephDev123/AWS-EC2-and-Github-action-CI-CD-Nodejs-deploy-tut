@@ -30,7 +30,7 @@ dotenv.config();
 // };
 
 const app: Express = express();
-const db = new DbConfig(process.env.DATABASE_URL!);
+const db = new DbConfig(process.env.DATABASE_URL as string);
 
 app.use(cors());
 app.use(express.json());
