@@ -33,14 +33,14 @@ jobs:
       # - name: Create dist_old directory if it doesn't exist
       #   run: mkdir -p dist_old
 
-      - name: Create .env file
-        run: |
-          echo "PORT=${{ secrets.PORT }}" >> dist/.env
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
-          echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
+      # - name: Create .env file
+      #   run: |
+      #     echo "PORT=${{ secrets.PORT }}" >> dist/.env
+      #     echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
+      #     echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
 
-      - name: Verify .env content
-        run: cat dist/.env
+      # - name: Verify .env content
+      #   run: cat dist/.env
 
       # - name: Debugging environment variables
       #   run: echo "PORT=${{ secrets.PORT }} DATABASE_URL=${{ secrets.DATABASE_URL }} SECRET=${{ secrets.SECRET }}"
@@ -79,6 +79,9 @@ jobs:
           echo "PORT=${{ secrets.PORT }}" >> dist/.env
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> dist/.env
           echo "SECRET=${{ secrets.SECRET }}" >> dist/.env
+
+      - name: change permission on .env content
+        run: chmod 777 dist/.env
 
       - name: Verify artifact content
         run: ls -la ./dist/
