@@ -48,8 +48,8 @@ const startApp = async () => {
     app.use("/list", (req: Request, res: Response) => res.send("listing...."));
     app.use(ErrorHandlerMiddleware);
 
-    app.listen(process.env.PORT || 80, () => {
-      console.log(`listening on port ${process.env.PORT || 80}`);
+    app.listen(process.env.PORT || 7000, () => {
+      console.log(`listening on port ${process.env.PORT || 7000}`);
     });
   } catch (error) {
     console.log(error);
