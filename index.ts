@@ -45,7 +45,7 @@ const startApp = async () => {
     );
 
     app.use("/users", (req: Request, res: Response) => res.send("users..."));
-    app.use("/list", (req: Request, res: Response) => res.send("listing..."));
+    app.use("/list", (req: Request, res: Response) => res.send("listing...."));
     app.use(ErrorHandlerMiddleware);
 
     app.listen(process.env.PORT || 7000, () => {
