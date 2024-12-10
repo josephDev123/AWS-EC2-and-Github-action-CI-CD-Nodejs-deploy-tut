@@ -125,7 +125,7 @@ jobs:
             fi
             # Ensure PM2 is available
             if ! command -v pm2 &> /dev/null; then
-            echo "PM2 not found, installing..."
+            echo "PM2 not found, installing.."
             sudo npm install -g pm2
             fi
             # Restart or start the app
